@@ -1,5 +1,6 @@
 [build]
-  publish = "."
+  command = "sh scripts/build_storefront.sh"
+  publish = "build/storefront"
 
 [[headers]]
   for = "/*"

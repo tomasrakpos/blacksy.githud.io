@@ -1,6 +1,9 @@
 [build]
-  publish = "."
-  functions = "netlify/functions"
+  command = "sh scripts/build_admin.sh"
+  publish = "build/admin"
+
+[functions]
+  directory = "netlify/functions"
 
 [[headers]]
   for = "/*"

@@ -31,14 +31,17 @@
 
 ### فروشگاه عمومی
 
-- یک Netlify Site بسازید که publish directory آن ریشه‌ی پروژه (`.`) باشد؛ `netlify.toml` ریشه، SPA fallback و security headers فروشگاه را دارد.
-- دامنه‌ی عمومی فروشگاه را به این Site متصل کنید.
-- متغیر server-side با Service Role برای این سایت لازم نیست؛ مرورگر فقط URL و کلید عمومی Supabase را دارد.
+- در Netlify از **Add new site → Import an existing project → GitHub** مخزن `tomasrakpos/Tomasrakpos.githud.io` را انتخاب و branch برابر `main` بگذارید.
+- Base/package directory را ریشه‌ی مخزن بگذارید (خالی). `netlify.toml` ریشه، `sh scripts/build_storefront.sh` را اجرا و فقط `build/storefront` را منتشر می‌کند؛ این خروجی شامل `index.html`، `style.css`، `js/`، `assets/` و `data/products.json` است. پنل مدیریت، توابع سرور، SQL و فایل‌های مستندات وارد سایت عمومی نمی‌شوند.
+- اگر Netlify مقادیر build را دستی خواست: Build command برابر `sh scripts/build_storefront.sh` و Publish directory برابر `build/storefront` باشد.
+- دامنه‌ی عمومی فروشگاه را به همین Site متصل کنید. Service Role برای فروشگاه عمومی لازم نیست؛ هرگز آن را در این Site یا کد مرورگر قرار ندهید.
 
 ### پنل مدیریت خصوصی
 
-- یک **Netlify Site جداگانه** از همان مخزن بسازید، با base directory برابر `admin-panel/` و publish directory برابر `.`؛ تنظیمات توابع در `admin-panel/netlify.toml` است.
-- این Site را به دامنه‌ی اختصاصی مدیریت متصل کنید؛ آن را زیر مسیر عمومی فروشگاه منتشر نکنید و لینکی از سایت عمومی به آن نسازید. `noindex` فقط جلوی ایندکس معمول را می‌گیرد و جای احراز هویت/RLS را نمی‌گیرد.
+- یک **Netlify Site جداگانه** از همان مخزن و branch `main` بسازید؛ Base/package directory را `admin-panel` قرار دهید تا `admin-panel/netlify.toml` استفاده شود.
+- این تنظیمات، `sh scripts/build_admin.sh` را اجرا می‌کند و فقط `build/admin` را منتشر می‌کند؛ توابع از `netlify/functions` جداگانه deploy می‌شوند و سورس تابع داخل پوشه‌ی منتشرشده نیست.
+- اگر تنظیمات را دستی وارد می‌کنید: Build command برابر `sh scripts/build_admin.sh`، Publish directory برابر `build/admin` و Functions directory برابر `netlify/functions` (نسبت به `admin-panel`) باشد.
+- این Site را به دامنه‌ی اختصاصی مدیریت متصل کنید؛ آن را زیر مسیر عمومی فروشگاه منتشر نکنید و لینکی از سایت عمومی به آن نسازید. `noindex` فقط جلوی ایندکس معمول را می‌گیرد و جای احراز هویت/RLS را نمی‌گیرد. مخزن GitHub فعلاً عمومی است، بنابراین **سورس کد پنل در GitHub قابل مشاهده است**؛ جداسازی بالا از منتشرشدن پنل روی دامنه‌ی storefront جلوگیری می‌کند.
 - فقط در محیط server-side همین Site، متغیرهای زیر را تنظیم کنید:
   - `SUPABASE_URL` — URL پروژه
   - `SUPABASE_ANON_KEY` — کلید عمومی پروژه (برای اعتبارسنجی درخواست مدیر)

@@ -23,6 +23,8 @@
 
 # Runtime/build/cache files
 .local/
+/build/
+/admin-panel/build/
 __pycache__/
 *.py[cod]
 .DS_Store
