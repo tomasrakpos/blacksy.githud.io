@@ -1,0 +1,29 @@
+# Secrets and local environment files
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+
+# Local user/order/support data — never publish these
+/data/users.json
+/data/orders.json
+/data/support.json
+/data/*.local.json
+
+# Temporary user uploads and generated search/option assets
+/uploads/
+/image-search/
+/Unselected files/
+
+# Runtime/build/cache files
+.local/
+__pycache__/
+*.py[cod]
+.DS_Store
+node_modules/
