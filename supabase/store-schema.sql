@@ -930,8 +930,11 @@ begin
       and (
         coalesce(qual, '') ilike '%avatars%'
         or coalesce(with_check, '') ilike '%avatars%'
+        or coalesce(qual, '') ilike '%product-assets%'
+        or coalesce(with_check, '') ilike '%product-assets%'
         or policyname ilike '%avatar%'
         or policyname ilike '%product-assets%'
+        or policyname ilike '%product_assets%'
       )
   loop
     execute format('drop policy %I on storage.objects', p.policyname);
